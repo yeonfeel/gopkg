@@ -9,22 +9,19 @@ import (
 	"gopkg.in/yaml.v2"
 
 	"github.com/yeonfeel/gopkg/er"
-	"github.com/yeonfeel/apps/pkg/logger"
+	"github.com/yeonfeel/gopkg/logger"
 )
 
 var log = logger.Get("config")
 
+// Config is a configuration of cli
 type Config struct {
 	Value          interface{}
 	Filename       string
 	SetFromEnvvars func(value interface{})
 }
 
-type ConfigSetting struct {
-	EnvName string
-	Default string
-}
-
+// New returns a new Config
 func New(filename string, value interface{}, setFromEnvvars func(interface{})) *Config {
 	conf := &Config{
 		Value:          value,
@@ -89,6 +86,7 @@ func (c *Config) Read() (err error) {
 	return nil
 }
 
+// Write a configuration file
 func (c *Config) Write() error {
 	b, err := yaml.Marshal(c.Value)
 	if err != nil {
@@ -118,7 +116,7 @@ func configDir() string {
 		return home
 	}
 	return os.Getenv("HOME")
-	//path := "/etc/kubewatch"
+	//path := "/etc/kubewatch"a
 	//if _, err := os.Stat(path); os.IsNotExist(err) {
 	//	os.Mkdir(path, 755)
 	//}
